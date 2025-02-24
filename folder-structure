@@ -1,0 +1,26 @@
+lost-and-found/
+├── frontend/
+│   ├── public/
+│   │   └── images/
+│   │       └── placeholder.png
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.js
+│   │   │   ├── ItemCard.js
+│   │   │   └── ImageUpload.js
+│   │   ├── pages/
+│   │   │   ├── Home.js
+│   │   │   ├── Search.js
+│   │   │   └── ReportLost.js
+│   │   └── App.js
+│   ├── index.html
+│   └── tailwind.config.js
+└── backend/
+    ├── models/
+    │   └── Item.js
+    ├── routes/
+    │   └── items.js
+    ├── config/
+    │   └── db.js
+    ├── server.js
+    └── .env 

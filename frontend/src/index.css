@@ -1,0 +1,448 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Map container styles */
+.map-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Leaflet specific styles */
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 600px !important;
+  z-index: 1;
+}
+
+/* Make sure map tiles are visible */
+.leaflet-layer,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out,
+.leaflet-control-attribution {
+  z-index: 2;
+}
+
+/* Fix for map tiles */
+.leaflet-tile {
+  visibility: inherit !important;
+}
+
+/* Fix for controls */
+.leaflet-control-container {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Custom marker styles */
+.custom-marker {
+  width: 35px;
+  height: 35px;
+}
+
+/* Popup styles */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+}
+
+.leaflet-popup-content {
+  margin: 8px 12px;
+  padding: 8px;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.marker-pulse {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -7px 0 0 -7px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.custom-user-marker {
+  border: none;
+  background: none;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.marker-pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+}
+
+.marker-pin.lost {
+  background: #ff5722;
+}
+
+.marker-pin.found {
+  background: #4caf50;
+}
+
+.marker-pin::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  margin: 3px 0 0 3px;
+  background: #fff;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.user-marker-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.user-marker-pulse {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(66, 153, 225, 0.3);
+  border: 2px solid rgba(66, 153, 225, 0.5);
+  animation: pulse 2s infinite;
+  top: -2px;
+  left: -2px;
+}
+
+.item-marker-container {
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+.marker-pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.marker-pin::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  margin: 3px 0 0 3px;
+  background: white;
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* Add these responsive styles */
+@media (max-width: 640px) {
+  .leaflet-control-zoom {
+    display: none;
+  }
+
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .marker-pin {
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+  }
+
+  .marker-pin::after {
+    width: 18px;
+    height: 18px;
+    margin: 3px 0 0 3px;
+  }
+
+  .user-marker-container {
+    width: 32px;
+    height: 32px;
+  }
+
+  .user-marker-pulse {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Add smooth transitions */
+.leaflet-fade-anim .leaflet-popup {
+  transition: opacity 0.2s linear;
+}
+
+.leaflet-zoom-animated {
+  transition: transform 0.25s cubic-bezier(0, 0, 0.25, 1);
+}
+
+/* Add to your existing styles */
+@layer utilities {
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }
+
+  .blur-up {
+    filter: blur(5px);
+    transition: filter 0.3s ease-out;
+  }
+
+  .blur-up.loaded {
+    filter: blur(0);
+  }
+}
+
+/* Smooth sidebar transition */
+.sidebar-transition {
+  transition-property: transform, opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Mobile menu animation */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Add to your existing styles */
+@layer components {
+  .profile-stat {
+    @apply text-center p-4 bg-gray-50 rounded-lg transition-all hover:bg-gray-100;
+  }
+
+  .profile-stat-number {
+    @apply text-xl sm:text-2xl font-bold text-blue-600;
+  }
+
+  .profile-stat-label {
+    @apply text-sm text-gray-600;
+  }
+
+  .social-link {
+    @apply text-gray-600 hover:text-gray-900 transition-colors;
+  }
+
+  .contact-method {
+    @apply flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all cursor-pointer;
+  }
+}
+
+/* Modal animation */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content {
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+/* Loading animations */
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1s linear infinite;
+  background: linear-gradient(
+    to right,
+    #f6f7f8 8%,
+    #edeef1 18%,
+    #f6f7f8 33%
+  );
+  background-size: 800px 104px;
+}
+
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
+
+.marker-pulse::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+/* Avatar fallback styles */
+.avatar-fallback {
+  background-color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+/* Custom marker styles */
+.custom-div-icon {
+  position: relative;
+  z-index: 3;
+}
+
+.marker-pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+}
+
+.marker-pulse {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -7px 0 0 -7px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Debug styles */
+.map-debug {
+  border: 2px solid green;
+  position: relative;
+}
+
+.map-debug::before {
+  content: 'Map Container';
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 4px;
+  z-index: 1000;
+}
+
+/* Add this to your existing CSS */
+.custom-pin {
+  width: 30px;
+  height: 30px;
+}
+
+.pin-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.pin-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 2px solid white;
+}
+
+.pin-icon.lost {
+  background-color: #EF4444;
+}
+
+.pin-icon.found {
+  background-color: #10B981;
+} 

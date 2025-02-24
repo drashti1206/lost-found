@@ -1,0 +1,12 @@
+{
+  "port": 5000,
+  "watch": true,
+  "routes": {
+    "/api/items": "/items",
+    "/api/users": "/users",
+    "/api/auth/login": "/auth/login",
+    "/api/auth/register": "/auth/register"
+  },
+  "middlewares": ["./middleware.js"],
+  "static": "./public"
+} 

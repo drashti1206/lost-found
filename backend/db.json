@@ -1,0 +1,144 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Test User",
+      "email": "user@example.com",
+      "password": "password123",
+      "role": "user",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=TestUser",
+      "bio": "Active community member helping others find lost items",
+      "phone": "+1234567890",
+      "location": "Mumbai",
+      "joinedDate": "2024-01-15",
+      "stats": {
+        "itemsFound": 5,
+        "itemsLost": 2,
+        "successfulMatches": 3,
+        "helpedOthers": 4
+      }
+    },
+    {
+      "id": 2,
+      "name": "Alice Smith",
+      "email": "alice@example.com",
+      "password": "alice123",
+      "role": "user",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Alice",
+      "bio": "Helping build a better community",
+      "phone": "+9876543210",
+      "location": "Delhi",
+      "joinedDate": "2024-02-01",
+      "stats": {
+        "itemsFound": 3,
+        "itemsLost": 1,
+        "successfulMatches": 2,
+        "helpedOthers": 3
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "userId": 1,
+      "type": "lost",
+      "title": "iPhone 13",
+      "description": "Lost near Marine Drive, black color with blue case",
+      "category": "electronics",
+      "date": "2024-03-15T10:30:00Z",
+      "location": "Marine Drive, Mumbai",
+      "latitude": 18.9442,
+      "longitude": 72.8237,
+      "status": "pending",
+      "images": ["iphone1.jpg", "iphone2.jpg"],
+      "reward": 1000,
+      "tags": ["phone", "apple", "electronics"],
+      "contactPreference": "phone",
+      "views": 45,
+      "matches": []
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "type": "found",
+      "title": "Wallet",
+      "description": "Found brown leather wallet near Connaught Place",
+      "category": "accessories",
+      "date": "2024-03-16T15:20:00Z",
+      "location": "Connaught Place, Delhi",
+      "latitude": 28.6289,
+      "longitude": 77.2065,
+      "status": "pending",
+      "images": ["wallet1.jpg"],
+      "tags": ["wallet", "leather", "brown"],
+      "contactPreference": "email",
+      "views": 32,
+      "matches": []
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Electronics",
+      "icon": "smartphone",
+      "itemCount": 15
+    },
+    {
+      "id": 2,
+      "name": "Documents",
+      "icon": "file-text",
+      "itemCount": 8
+    },
+    {
+      "id": 3,
+      "name": "Accessories",
+      "icon": "watch",
+      "itemCount": 12
+    },
+    {
+      "id": 4,
+      "name": "Others",
+      "icon": "package",
+      "itemCount": 5
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "userId": 1,
+      "type": "match",
+      "title": "Potential Match Found",
+      "message": "We found a potential match for your lost iPhone",
+      "date": "2024-03-17T14:30:00Z",
+      "read": false,
+      "itemId": 1
+    }
+  ],
+  "matches": [
+    {
+      "id": 1,
+      "lostItemId": 1,
+      "foundItemId": 2,
+      "status": "pending",
+      "createdAt": "2024-03-17T14:30:00Z",
+      "matchPercentage": 85
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "matchId": 1,
+      "senderId": 1,
+      "receiverId": 2,
+      "content": "Hi, I think this might be my wallet",
+      "timestamp": "2024-03-17T14:35:00Z",
+      "read": false
+    }
+  ],
+  "stats": {
+    "totalUsers": 150,
+    "activeItems": 45,
+    "successfulMatches": 23,
+    "totalItems": 68
+  }
+}
