@@ -28,13 +28,13 @@ function App() {
           <Route path="/" element={<Layout><Home /></Layout>} />
           <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
           <Route path="/search" element={<Layout><Search /></Layout>} />
-          <Route path="/report" element={<Layout><ReportLost /></Layout>} />
           <Route path="/profile" element={<Layout><Profile /></Layout>} />
           <Route path="/settings" element={<Layout><Settings /></Layout>} />
           <Route path="/help" element={<Layout><Help /></Layout>} />
           <Route path="/notifications" element={<Layout><Notifications /></Layout>} />
           <Route path="/my-items" element={<Layout><MyItems /></Layout>} />
           <Route path="/achievements" element={<Layout><Achievements /></Layout>} />
+          <Route path="/report" element={<Layout><ReportLost /></Layout>} />
 
           {/* Catch all */}
           <Route path="*" element={<Navigate to="/login" />} />

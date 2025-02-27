@@ -1,6 +1,6 @@
 module.exports = (req, res, next) => {
   // Add CORS headers
-  res.header('Access-Control-Allow-Origin', '*'); // Allow all origins in development
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // Allow frontend origin
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Credentials', 'true');
@@ -10,17 +10,21 @@ module.exports = (req, res, next) => {
     return res.sendStatus(200);
   }
 
-  // Add body parsing for login
+  // Parse JSON body for POST requests
   if (req.method === 'POST' && !req.body) {
     let body = '';
     req.on('data', chunk => {
       body += chunk.toString();
     });
     req.on('end', () => {
-      if (body) {
-        req.body = JSON.parse(body);
+      try {
+        if (body) {
+          req.body = JSON.parse(body);
+        }
+        next();
+      } catch (error) {
+        res.status(400).json({ message: 'Invalid JSON body' });
       }
-      next();
     });
     return;
   }

@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
-const BASE_URL = 'http://localhost:5000';
+// Get port from environment or use fallback ports
+const API_PORT = process.env.VITE_API_PORT || 5000;
+const BASE_URL = `http://localhost:${API_PORT}`;
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -21,7 +23,7 @@ export const endpoints = {
   items: {
     list: '/items',
     create: '/items',
-    search: (query) => `/items?q=${query}`,
+    search: (query) => `/items/search?q=${query}`,
     byUser: (userId) => `/users/${userId}/items`,
     single: (id) => `/items/${id}`,
     stats: '/items/stats'
@@ -59,13 +61,18 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.code === 'ECONNABORTED') {
-      toast.error('Request timed out. Please try again.');
-    } else if (!error.response) {
-      toast.error('Network error. Please check your connection.');
+    if (error.response) {
+      // Server responded with error status
+      console.error('Response error:', error.response.data);
+      toast.error(error.response.data.message || 'An error occurred');
+    } else if (error.request) {
+      // Request made but no response
+      console.error('Network error:', error.request);
+      toast.error('Network error - please check your connection');
     } else {
-      const message = error.response.data.message || 'An error occurred';
-      toast.error(message);
+      // Something else happened
+      console.error('Error:', error.message);
+      toast.error('An unexpected error occurred');
     }
     return Promise.reject(error);
   }

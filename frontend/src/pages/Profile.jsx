@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import api from '../services/api';
-import LoadingSkeleton from '../components/LoadingState';
+import LoadingSpinner from '../components/LoadingSpinner';
 import TrustScore from '../components/TrustScore';
 import CommunityRewards from '../components/CommunityRewards';
 import SmartMatch from '../components/SmartMatch';
@@ -21,6 +21,7 @@ const Profile = () => {
   const [imageError, setImageError] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [userItems, setUserItems] = useState([]);
   const [displayUser, setDisplayUser] = useState(null);
   const [item, setItem] = useState(null);
@@ -29,24 +30,28 @@ const Profile = () => {
     const fetchUserData = async () => {
       try {
         setLoading(true);
-        // Get user's items
-        const itemsResponse = await api.get(`/items?userId=${user.id}`);
-        setUserItems(itemsResponse.data);
+        setError(null);
+        
+        if (!user?.id) {
+          throw new Error('User not authenticated');
+        }
+
+        const response = await api.get(`/users/${user.id}/items`);
+        setUserItems(response.data);
 
         // Set display user to current user if no specific user is being viewed
         setDisplayUser(user);
       } catch (error) {
         console.error('Error fetching data:', error);
+        setError(error.message || 'Failed to load profile data');
         toast.error('Failed to load profile data');
       } finally {
         setLoading(false);
       }
     };
 
-    if (user?.id) {
-      fetchUserData();
-    }
-  }, [user]);
+    fetchUserData();
+  }, [user?.id]);
 
   // Construct avatar URL with all necessary parameters
   const getAvatarUrl = (seed) => {
@@ -54,7 +59,23 @@ const Profile = () => {
   };
 
   if (loading) {
-    return <LoadingSkeleton />;
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="text-red-500 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
   }
 
   if (!displayUser) {

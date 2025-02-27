@@ -22,18 +22,25 @@ const lostIcon = createCustomIcon('lost');
 const foundIcon = createCustomIcon('found');
 
 const MapPin = ({ item, onPinClick }) => {
+  // Guard against missing coordinates
+  if (!item?.latitude || !item?.longitude) {
+    console.warn('Missing coordinates for item:', item);
+    return null;
+  }
+
+  const position = [item.latitude, item.longitude];
   const icon = item.type === 'lost' ? lostIcon : foundIcon;
-  
+
   return (
-    <Marker
-      position={[item.latitude, item.longitude]}
+    <Marker 
+      position={position} 
       icon={icon}
       eventHandlers={{
         click: () => onPinClick && onPinClick(item)
       }}
     >
       <Popup>
-        <div className="min-w-[200px]">
+        <div className="p-3">
           <h3 className="font-semibold text-lg">{item.title}</h3>
           <p className="text-sm text-gray-600">{item.description}</p>
           <div className="mt-2 flex items-center gap-2">

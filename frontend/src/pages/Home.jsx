@@ -10,19 +10,30 @@ const Home = () => {
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [stats, setStats] = useState({
     activeReports: 0,
     itemsFound: 0,
     recentMatches: 0
   });
 
+  // Default center coordinates (e.g., Mumbai)
+  const defaultCenter = [18.9220, 72.8347];
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
+        setLoading(true);
         const response = await itemService.getAll();
-        setItems(response.data);
+        // Filter out items without valid coordinates
+        const validItems = response.data.filter(item => 
+          item.latitude && item.longitude && 
+          !isNaN(item.latitude) && !isNaN(item.longitude)
+        );
+        setItems(validItems);
       } catch (error) {
         console.error('Error fetching items:', error);
+        setError('Failed to load items');
       } finally {
         setLoading(false);
       }
@@ -52,18 +63,22 @@ const Home = () => {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
 
+  if (error) {
+    return <div className="flex items-center justify-center h-screen">Error: {error}</div>;
+  }
+
   return (
     <div className="relative h-screen">
       <MapContainer
-        center={[20.5937, 78.9629]} // Center of India
-        zoom={5}
-        className="h-full w-full"
+        center={defaultCenter}
+        zoom={13}
+        style={{ height: '100vh', width: '100%' }}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {items.map(item => (
+        {items.map((item) => (
           <MapPin
             key={item.id}
             item={item}
